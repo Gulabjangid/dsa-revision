@@ -3568,5 +3568,107 @@ const questionContent = [
         "content": "No dry run was included in the supplied notes."
       }
     ]
+  },
+  {
+    "number": 110,
+    "title": "Find K Closest Elements",
+    "sections": [
+      {
+        "title": "Problem",
+        "content": "Given a **sorted** integer array `arr`, return the `k` elements closest to `x`. The result must remain sorted. If two values are equally close, prefer the smaller value.\n\n### Example\n\n```\nInput: arr = [1,2,3,4,5], k = 4, x = 3\nOutput: [1,2,3,4]\n```"
+      },
+      {
+        "title": "Approach",
+        "content": "Binary-search the starting index of the answer window. A window of `k` elements can start from `0` through `n-k`.\n\nCompare the values just outside a candidate window: `arr[mid]` and `arr[mid + k]`. If the left value is farther from `x`, move the window right; otherwise keep the left half. Choosing the left half on a tie also selects the smaller values."
+      },
+      {
+        "title": "Algorithm / Steps",
+        "content": "1. Set the search range for the window start to `[0, n-k]`.\n2. Let `mid` be the middle candidate start.\n3. Compare `x - arr[mid]` with `arr[mid+k] - x`.\n4. If the left distance is larger, move `left` to `mid + 1`; otherwise move `right` to `mid`.\n5. Return the `k` values beginning at the converged start."
+      },
+      {
+        "title": "C++ Code",
+        "content": "```\nclass Solution {\npublic:\n    vector<int> findClosestElements(vector<int>& arr, int k, int x) {\n        int left = 0;\n        int right = static_cast<int>(arr.size()) - k;\n\n        while (left < right) {\n            int mid = left + (right - left) / 2;\n            long long leftDistance = static_cast<long long>(x) - arr[mid];\n            long long rightDistance = static_cast<long long>(arr[mid + k]) - x;\n\n            if (leftDistance > rightDistance) {\n                left = mid + 1;\n            } else {\n                right = mid;\n            }\n        }\n\n        return vector<int>(arr.begin() + left, arr.begin() + left + k);\n    }\n};\n```"
+      },
+      {
+        "title": "Complexity",
+        "content": "- **Time:** `O(log(n-k+1) + k)`\n- **Auxiliary space:** `O(1)`, excluding the returned vector."
+      },
+      {
+        "title": "Easy Revision Note",
+        "content": "> **Find the best window start; compare the two values just outside it.**\nOn equal distances, keep the left window to prefer smaller values."
+      },
+      {
+        "title": "Optional Dry Run",
+        "content": "For `arr = [1,2,3,4,5]`, `k = 4`, and `x = 3`, the only candidate starts are `0` and `1`.\n\nAt `mid = 0`, compare `3 - 1 = 2` with `5 - 3 = 2`. The distances tie, so keep the left window.\n\nThe answer is `[1,2,3,4]`."
+      }
+    ]
+  },
+  {
+    "number": 111,
+    "title": "Find Median from Data Stream",
+    "sections": [
+      {
+        "title": "Problem",
+        "content": "Design a data structure that supports adding integers and returning the median of all values seen so far.\n\n- `addNum(num)` adds `num` to the stream.\n- `findMedian()` returns the middle value, or the average of the two middle values when the count is even.\n\n### Example\n\n```\naddNum(1)\naddNum(2)\nfindMedian() -> 1.5\naddNum(3)\nfindMedian() -> 2.0\n```"
+      },
+      {
+        "title": "Approach",
+        "content": "Maintain two heaps. `lower` is a max-heap containing the smaller half; `upper` is a min-heap containing the larger half. Keep `lower` the same size as `upper`, or one element larger. The median is then available at the heap tops."
+      },
+      {
+        "title": "Algorithm / Steps",
+        "content": "1. Insert a value into `lower` if it belongs in the smaller half; otherwise insert it into `upper`.\n2. If one heap becomes too large, move its top value to the other heap.\n3. If both heaps have the same size, average their tops.\n4. Otherwise, return the top of `lower`."
+      },
+      {
+        "title": "C++ Code",
+        "content": "```\nclass MedianFinder {\nprivate:\n    priority_queue<int> lower;\n    priority_queue<int, vector<int>, greater<int>> upper;\n\npublic:\n    MedianFinder() = default;\n\n    void addNum(int num) {\n        if (lower.empty() || num <= lower.top()) {\n            lower.push(num);\n        } else {\n            upper.push(num);\n        }\n\n        if (lower.size() > upper.size() + 1) {\n            upper.push(lower.top());\n            lower.pop();\n        } else if (upper.size() > lower.size()) {\n            lower.push(upper.top());\n            upper.pop();\n        }\n    }\n\n    double findMedian() {\n        if (lower.size() == upper.size()) {\n            return (static_cast<double>(lower.top()) + upper.top()) / 2.0;\n        }\n        return lower.top();\n    }\n};\n```"
+      },
+      {
+        "title": "Complexity",
+        "content": "- **Time:** `O(log n)` per insertion and `O(1)` per median query.\n- **Space:** `O(n)`."
+      },
+      {
+        "title": "Easy Revision Note",
+        "content": "> **Max-heap for the lower half + min-heap for the upper half.**\nKeep the lower half equal in size or one element larger."
+      },
+      {
+        "title": "Optional Dry Run",
+        "content": "Insert `1`: `lower = [1]`, `upper = []`.\n\nInsert `2`: `lower = [1]`, `upper = [2]`; median is `(1 + 2) / 2 = 1.5`.\n\nInsert `3`: rebalance to `lower = [2,1]`, `upper = [3]`; median is `2`."
+      }
+    ]
+  },
+  {
+    "number": 112,
+    "title": "Task Scheduler",
+    "sections": [
+      {
+        "title": "Problem",
+        "content": "Given tasks represented by uppercase letters and a non-negative cooldown `n`, return the minimum number of CPU intervals needed to finish all tasks. The same task must have at least `n` intervals between executions. An interval may be idle.\n\n### Example\n\n```\nInput: tasks = [A,A,A,B,B,B], n = 2\nOutput: 8\nOne valid schedule: A B idle A B idle A B\n```"
+      },
+      {
+        "title": "Approach",
+        "content": "Count each task's frequency. The most frequent task determines the minimum frame length: its copies require `n` slots between them. Other tasks can fill those slots. If there are several tasks tied for the maximum frequency, each occupies the final position in a frame. The answer cannot be less than the number of tasks themselves."
+      },
+      {
+        "title": "Algorithm / Steps",
+        "content": "1. Count the frequency of each task.\n2. Find the maximum frequency `maxFreq`.\n3. Count how many task types have frequency `maxFreq`.\n4. Compute `(maxFreq - 1) * (n + 1) + countMax`.\n5. Return the larger of that frame length and the total task count."
+      },
+      {
+        "title": "C++ Code",
+        "content": "```\nclass Solution {\npublic:\n    int leastInterval(vector<char>& tasks, int n) {\n        vector<int> frequency(26, 0);\n        for (char task : tasks) {\n            frequency[task - 'A']++;\n        }\n\n        int maxFreq = *max_element(frequency.begin(), frequency.end());\n        int countMax = 0;\n        for (int count : frequency) {\n            if (count == maxFreq) {\n                countMax++;\n            }\n        }\n\n        int frameLength = (maxFreq - 1) * (n + 1) + countMax;\n        return max(static_cast<int>(tasks.size()), frameLength);\n    }\n};\n```"
+      },
+      {
+        "title": "Complexity",
+        "content": "- **Time:** `O(N + 26)`, where `N` is the number of tasks.\n- **Space:** `O(1)` extra space for the 26 uppercase letters."
+      },
+      {
+        "title": "Easy Revision Note",
+        "content": "> **Answer = max(task count, most-frequent-task frame).**\nThe frame is `(maxFreq - 1) * (cooldown + 1) + number of max-frequency task types`."
+      },
+      {
+        "title": "Optional Dry Run",
+        "content": "For `[A,A,A,B,B,B]` with `n = 2`, `maxFreq = 3` and `countMax = 2`.\n\n```\nframeLength = (3 - 1) * (2 + 1) + 2 = 8\n```\n\nThere are six tasks, so the minimum schedule length is `max(6, 8) = 8`."
+      }
+    ]
   }
 ];
