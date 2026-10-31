@@ -3,60 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0b0d">
+<meta name="theme-color" content="#f6f6fa">
 <title>DSA </title>
 <style>
 :root {
-  --bg:#0b0b0d; --sidebar:#111113; --hover:#1a1a1d;
-  --border:#29292d; --text:#f1f1f3; --muted:#a4a4ab; --line:#303035;
+  color-scheme:light;
+  --bg:#f7f7fb; --sidebar:#eff0fa; --hover:#e6e9fb;
+  --border:#e5e5ee; --text:#282b40; --muted:#7b7f96; --line:#dedfea;
 }
 *{box-sizing:border-box}
 html{background:var(--bg);overflow-x:hidden}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
-.sidebar{width:360px;height:100vh;flex:0 0 360px;background:var(--sidebar);padding:18px 10px 35px;overflow-y:auto;scrollbar-width:none;transition:width .2s ease,padding .2s ease}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+.sidebar{width:256px;height:100vh;flex:0 0 256px;background:linear-gradient(180deg,#eff0fb 0%,#f3f4fa 100%);padding:18px 10px 35px;overflow-y:auto;scrollbar-width:none;transition:width .2s ease,padding .2s ease}
 .sidebar::-webkit-scrollbar,.content::-webkit-scrollbar{display:none}
-.sidebar-toggle{position:fixed;z-index:10;top:18px;left:348px;width:30px;height:30px;border:1px solid var(--border);border-radius:50%;background:var(--hover);color:var(--text);cursor:pointer;font-size:18px;line-height:1;transition:left .2s ease,background .15s ease}
-.sidebar-toggle:hover{background:#26262b}
-.sidebar-toggle:focus-visible{outline:2px solid #aaa;outline-offset:2px}
+.sidebar-toggle{position:fixed;z-index:10;top:18px;left:244px;width:24px;height:24px;border:1px solid var(--border);border-radius:50%;background:#fff;color:var(--text);cursor:pointer;font-size:17px;line-height:1;transition:left .2s ease,background .15s ease}
+.sidebar-toggle:hover{background:#e8e8f4}
+.sidebar-toggle:focus-visible{outline:2px solid #9699b4;outline-offset:2px}
 .sidebar-hidden .sidebar{display:none}
 .sidebar-hidden .sidebar-toggle{left:10px}
 .sidebar-hidden .sidebar-toggle .toggle-icon{display:inline-block;transform:rotate(180deg)}
-.header{padding:8px 16px 20px;border-bottom:1px solid var(--border);margin-bottom:10px}
-.title{font-size:20px;font-weight:800;letter-spacing:.2px}
-.count{font-size:12px;color:var(--muted);margin-top:4px}
+.header{padding:5px 13px 15px;border-bottom:1px solid #dfe1f0;margin-bottom:12px}
+.title{font-size:18px;font-weight:800;letter-spacing:.1px;color:#343955}
+.nav-label{padding:4px 13px 7px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:1.1px}
 .topic>summary,.pattern>summary{list-style:none;cursor:pointer;user-select:none}
 .topic>summary::-webkit-details-marker,.pattern>summary::-webkit-details-marker{display:none}
-.topic>summary{padding:13px 14px;border-radius:9px;font-size:17px;font-weight:750}
+.topic>summary{padding:9px 10px;border-left:3px solid transparent;border-radius:8px;font-size:13px;font-weight:750;transition:background .15s ease,color .15s ease,border-color .15s ease}
 .topic>summary:hover,.pattern>summary:hover{background:var(--hover)}
-.chevron{display:inline-block;width:8px;height:8px;border-right:2px solid #999;border-bottom:2px solid #999;transform:rotate(-45deg);margin:0 12px 2px 2px;transition:.15s}
+.topic[open]>summary{background:#e5e8fb;border-left-color:#777fd0;color:#343b66}
+.chevron{display:inline-block;width:6px;height:6px;border-right:1.7px solid #777b91;border-bottom:1.7px solid #777b91;transform:rotate(-45deg);margin:0 10px 2px 2px;transition:.15s}
 details[open]>summary .chevron{transform:rotate(45deg);margin-bottom:5px}
-.patterns{margin-left:23px;border-left:1px solid var(--line);padding-left:7px}
-.pattern>summary{padding:9px 10px 9px 15px;color:#c0c0c6;font-size:14px;font-weight:650}
-.pattern .chevron{width:7px;height:7px;margin-right:9px;border-color:#777}
-.questions{padding:2px 0 8px 22px}
-.question{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:7px;color:#aaaab1;text-decoration:none;font-size:13px;line-height:1.35}
-.question:hover{background:#18181b;color:#eee}
-.number{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;color:#666;min-width:25px;text-align:right}
-.doc{width:14px;height:17px;border:1.3px solid #777;border-radius:2px;position:relative;flex:none}
-.doc:after{content:"";position:absolute;left:3px;right:3px;top:5px;height:1px;background:#777;box-shadow:0 4px #777,0 8px #777}
+.patterns{margin-left:13px;border-left:1px solid var(--line);padding-left:5px}
+.pattern>summary{padding:8px 8px 8px 10px;color:#555a72;font-size:12px;font-weight:650}
+.pattern[open]>summary{color:#426b60;background:#e3f2eb;border-radius:7px}
+.pattern .chevron{width:5px;height:5px;margin-right:8px;border-color:#8589a0}
+.questions{padding:2px 0 7px 7px}
+.question{display:flex;align-items:flex-start;gap:8px;padding:6px 7px;border-radius:8px;color:#5e6278;text-decoration:none;font-size:12px;line-height:1.35}
+.question:hover{background:#e8e8f4;color:#292d42}
+.question.active{background:#e2e4fb;color:#292d42;box-shadow:inset 3px 0 #777fd0}
+.number{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#82869b;min-width:20px;text-align:right;padding-top:2px}
+.doc{width:9px;height:11px;border:1px solid #85899d;border-radius:1.5px;position:relative;flex:none;margin-top:1px}
+.doc:after{content:"";position:absolute;left:2px;right:2px;top:3px;height:1px;background:#85899d;box-shadow:0 2px #85899d,0 4px #85899d}
 .layout{display:flex;height:100vh;overflow:hidden}
-.content{flex:1;min-width:0;width:100%;height:100vh;padding:34px clamp(20px,5vw,72px);max-width:1100px;overflow-y:auto;scrollbar-width:none}
+.content{flex:1;min-width:0;width:100%;height:100vh;padding:34px 40px;max-width:865px;overflow-y:auto;scrollbar-width:none}
 .question-card{scroll-margin-top:20px;margin:0 0 42px}
-.question-card h2{font-size:27px;margin:0 0 16px;overflow-wrap:anywhere}
-.question-card h2 .q-number{color:#777;font:14px ui-monospace,SFMono-Regular,Menlo,monospace;margin-right:8px}
-.section{border:1px solid var(--border);border-radius:9px;margin:10px 0;background:#111113;overflow:hidden}
-.section-title{padding:14px 17px;font-weight:700;border-bottom:1px solid var(--border)}
-.section-dropdown>summary{cursor:pointer;list-style:none;padding:14px 17px;font-weight:700}
+.question-heading{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:0 0 16px}
+.question-heading h1{font-size:25px;line-height:1.2;margin:0;letter-spacing:-.4px;overflow-wrap:anywhere}
+.q-number{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:50%;background:#25283d;color:white;font:700 12px ui-monospace,SFMono-Regular,Menlo,monospace}
+.pattern-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1px solid #e8e8f0;border-radius:999px;background:#fff;color:#666b80;font-size:11px;line-height:1}
+.section{border:0;border-radius:19px;margin:10px 0;background:#fff;overflow:hidden;padding:8px}
+.section-title{padding:8px 12px;font-size:13px;font-weight:750;color:#41455c}
+.section-dropdown>summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:700}
 .section-dropdown>summary::-webkit-details-marker{display:none}
 .section-dropdown>summary:before{content:"+";display:inline-block;width:18px;color:#999;font-size:18px}
 .section-dropdown[open]>summary:before{content:"−"}
-.section-body{border-top:1px solid var(--border);padding:16px 19px;color:#d6d6da;line-height:1.6;overflow-x:auto;overflow-y:hidden}
+.section-body{border-radius:13px;background:#fff;padding:15px 18px;color:#555a70;font-size:14px;line-height:1.65;overflow-x:auto;overflow-y:hidden}
 .section-body p{margin:0 0 12px}.section-body p:last-child{margin-bottom:0}
 .section-body ul,.section-body ol{margin:7px 0 12px;padding-left:24px}
-.section-body pre{background:#0a0a0c;border:1px solid #25252a;border-radius:7px;padding:14px;overflow:auto;line-height:1.45}
-.section-body code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#f1c674}
-.section-body pre code{color:#ddd}
-.section-body blockquote{border-left:3px solid #777;margin:12px 0;padding-left:14px;color:#bbb;font-style:italic}
+.section-body pre{background:#f6f6fa;border:1px solid #e8e8f0;border-radius:9px;padding:14px;overflow:auto;line-height:1.5}
+.section-body code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#4f536e;background:#eeeefa;border-radius:4px;padding:1px 4px}
+.section-body pre code{color:#33374e;background:transparent;padding:0}
+.section-body blockquote{border-left:3px solid #b5b8d8;margin:12px 0;padding-left:14px;color:#656a81;font-style:italic}
+.problem-section{background:#e4e5fb}
+.problem-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.problem-statement,.problem-detail{grid-column:1/-1}
+.problem-statement{padding:14px 18px 12px}
+.problem-statement-label{margin-bottom:7px;color:#8589a0;font-size:10px;font-weight:800;letter-spacing:.8px}
+.problem-example{background:#ffe5d4}
+.problem-example.example-even{background:#d9f3e8}
+.problem-example .section-body,.problem-detail .section-body{padding:13px 16px}
+.problem-example pre,.problem-detail pre{background:#fff;border-color:#fff;margin-top:8px}
+.problem-example .section-title,.problem-detail .section-title{padding:8px 12px}
+.problem-detail{background:#dcecff}
+.problem-extra{grid-column:1/-1;background:#ececf6}
+.problem-extra .section-body{padding:13px 16px}
+.content-section:nth-of-type(2){background:#e9e7fb}
+.content-section:nth-of-type(3){background:#e0efff}
+.content-section:nth-of-type(4){background:#e9eaf0}
+.content-section:nth-of-type(5){background:#e0f3e9}
+.content-section:nth-of-type(6){background:#fff0d9}
+.section-dropdown{background:#ececf6}
+.question:focus-visible,.pattern>summary:focus-visible,.topic>summary:focus-visible{outline:2px solid #9a9dc4;outline-offset:2px}
 @media(max-width:700px){
   .layout{display:block;height:auto;min-height:100svh;overflow:visible}
   .sidebar{width:100%;height:auto;flex:none;min-height:auto;border-bottom:1px solid var(--border);max-height:45svh;padding:12px 8px 20px}
@@ -64,20 +90,24 @@ details[open]>summary .chevron{transform:rotate(45deg);margin-bottom:5px}
   .sidebar-hidden .sidebar{width:100%;max-height:0;padding-top:0;padding-bottom:0;border-bottom-color:transparent}
   .sidebar-hidden .sidebar-toggle{left:auto;right:12px}
   .header{padding:8px 12px 14px}
-  .topic>summary{padding:14px 12px}
-  .pattern>summary{padding:12px 10px 12px 13px}
-  .question{min-height:44px;padding:11px 8px;font-size:14px}
-  .content{height:auto;overflow:visible;padding:24px 12px 40px;max-width:none}
+  .topic>summary{padding:12px}
+  .pattern>summary{padding:11px 10px 11px 13px}
+  .question{min-height:40px;padding:10px 8px;font-size:14px}
+  .content{height:auto;overflow:visible;padding:25px 16px 40px;max-width:none}
   .question-card{margin-bottom:24px}
-  .question-card h2{font-size:23px;line-height:1.25}
+  .question-heading{gap:8px}
+  .question-heading h1{font-size:22px}
+  .q-number{width:34px;height:34px}
+  .pattern-badge{font-size:10px;padding:5px 8px}
+  .problem-layout{grid-template-columns:minmax(0,1fr)}
   .section-title,.section-dropdown>summary{padding:14px}
-  .section-body{padding:14px;font-size:15px}
-  .section-body pre{max-width:100%;font-size:13px}
+  .section-body{padding:14px;font-size:16px}
+  .section-body pre{max-width:100%;font-size:14px}
 }
 @media(max-width:360px){
   .content{padding-left:9px;padding-right:9px}
-  .question-card h2{font-size:21px}
-  .section-body{padding:12px;font-size:14px}
+  .question-heading h1{font-size:20px}
+  .section-body{padding:12px;font-size:15px}
 }
 </style>
 </head>
@@ -89,8 +119,8 @@ details[open]>summary .chevron{transform:rotate(45deg);margin-bottom:5px}
   <aside class="sidebar" id="sidebar">
     <div class="header">
       <div class="title">DSA Revision </div>
-      <div class="count">161 questions · pattern-wise</div>
     </div>
+    <div class="nav-label">PATTERNS</div>
     <div id="tree"></div>
   </aside>
   <main class="content">
@@ -200,11 +230,21 @@ const topicLabels = {
 };
 const tree = document.getElementById("tree");
 const content = document.getElementById("content");
-const count = document.querySelector(".count");
 const layout = document.querySelector(".layout");
 const sidebarToggle = document.querySelector(".sidebar-toggle");
 const normalizeTitle = (title) => title.toLowerCase().replace(/[^a-z0-9]/g, "");
 const questionByTitle = new Map(questionContent.map((question) => [normalizeTitle(question.title), question]));
+const patternByTitle = new Map();
+for (const [topic, patterns] of Object.entries(orderedMaster)) {
+  for (const [pattern, titles] of Object.entries(patterns)) {
+    for (const title of titles) {
+      patternByTitle.set(normalizeTitle(title), {
+        topic: topicLabels[topic] || topic,
+        pattern
+      });
+    }
+  }
+}
 const questionByDisplayNumber = new Map();
 let questionNumber = 0;
 
@@ -261,25 +301,107 @@ function inlineMarkdown(value) {
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
 }
 
+function renderProblemContent(markdown) {
+  const constraintMatch = markdown.match(
+    /^\*\*Important (?:constraint|assumption)(?:\s*\/\s*assumption)?:\*\*\s*(.+)$/im
+  );
+  if (constraintMatch) {
+    markdown = markdown.replace(constraintMatch[0], "").replace(/^\s*---\s*$/gm, "");
+  }
+  const blocks = [];
+  let current = { title: "", lines: [] };
+  for (const line of markdown.split(/\r?\n/)) {
+    const heading = line.match(/^###\s+(.+)$/);
+    if (heading) {
+      blocks.push(current);
+      current = { title: heading[1], lines: [] };
+    } else {
+      current.lines.push(line);
+    }
+  }
+  blocks.push(current);
+
+  const statementBlock = blocks.find((block) =>
+    /^(?:short )?problem statement$/i.test(block.title)
+  );
+  const intro = blocks.find((block) => !block.title);
+  const examples = blocks.filter((block) => /^example\b/i.test(block.title));
+  const details = blocks.filter((block) =>
+    block.title
+    && !/^example\b/i.test(block.title)
+    && block !== statementBlock
+    && !/constraint|assumption/i.test(block.title)
+  );
+  const statement = [
+    statementBlock && statementBlock.lines.join("\n").trim(),
+    intro && intro.lines.join("\n").trim()
+  ].filter(Boolean).join("\n\n");
+  const constraintBlock = blocks.find((block) =>
+    /constraint|assumption/i.test(block.title)
+  );
+  const constraint = constraintMatch
+    ? constraintMatch[1].trim()
+    : constraintBlock && constraintBlock.lines.join("\n").trim();
+  const statementCard = statement
+    ? `<div class="problem-statement section-body">
+        <div class="problem-statement-label">SHORT PROBLEM STATEMENT</div>
+        ${renderMarkdown(statement)}
+      </div>`
+    : "";
+  const exampleCards = examples.map((example, index) =>
+    `<section class="section problem-example${index % 2 ? " example-even" : ""}">
+      <div class="section-title">${escapeHtml(example.title)}</div>
+      <div class="section-body">${renderMarkdown(example.lines.join("\n").trim())}</div>
+    </section>`
+  ).join("");
+  const constraintCard = constraint
+    ? `<section class="section problem-detail">
+      <div class="section-title">Important constraint / assumption</div>
+      <div class="section-body">${renderMarkdown(constraint)}</div>
+    </section>`
+    : "";
+  const detailCards = details.map((detail) =>
+    `<section class="section problem-extra">
+      <div class="section-title">${escapeHtml(detail.title)}</div>
+      <div class="section-body">${renderMarkdown(detail.lines.join("\n").trim())}</div>
+    </section>`
+  ).join("");
+
+  return `<div class="problem-layout">${statementCard}${exampleCards}${constraintCard}${detailCards}</div>`;
+}
+
 function showQuestion(number, title) {
   const question = questionByDisplayNumber.get(number);
   if (!question) {
     content.innerHTML = "";
     return;
   }
+  const pattern = patternByTitle.get(normalizeTitle(question.title));
   content.innerHTML = `<article class="question-card" id="q-${number}">
-    <h2><span class="q-number">#${String(number).padStart(3, "0")}</span>${escapeHtml(question.title)}</h2>
-    ${question.sections.map((section) => {
+    <header class="question-heading">
+      <span class="q-number">${String(number).padStart(3, "0")}</span>
+      <h1>${escapeHtml(question.title)}</h1>
+      ${pattern ? `<span class="pattern-badge">${escapeHtml(pattern.pattern)}</span>` : ""}
+    </header>
+    ${question.sections.map((section, index) => {
+      if (section.title === "Problem") {
+        return `<section class="section problem-section">
+          <div class="section-title">${escapeHtml(section.title)}</div>
+          ${renderProblemContent(section.content)}
+        </section>`;
+      }
       const body = `<div class="section-body">${renderMarkdown(section.content)}</div>`;
       return section.title === "Optional Dry Run"
-        ? `<details class="section section-dropdown"><summary>${escapeHtml(section.title)}</summary>${body}</details>`
-        : `<section class="section"><div class="section-title">${escapeHtml(section.title)}</div>${body}</section>`;
+        ? `<details class="section section-dropdown content-section"><summary>${escapeHtml(section.title)}</summary>${body}</details>`
+        : `<section class="section content-section"><div class="section-title">${escapeHtml(section.title)}</div>${body}</section>`;
     }).join("")}
   </article>`;
+  document.querySelectorAll(".question.active").forEach((item) => item.classList.remove("active"));
+  document.querySelector(`a.question[href="#q-${number}"]`)?.classList.add("active");
   history.replaceState(null, "", `#q-${number}`);
-    if (window.matchMedia("(max-width: 700px)").matches) {
-      content.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  if (window.matchMedia("(max-width: 700px)").matches) {
+    content.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 for (const [topic, patterns] of Object.entries(orderedMaster)) {
@@ -304,6 +426,7 @@ for (const [topic, patterns] of Object.entries(orderedMaster)) {
 
     const patternDetails = document.createElement("details");
     patternDetails.className = "pattern";
+    patternDetails.open = questionNumber === 0;
     const patternSummary = document.createElement("summary");
     patternSummary.innerHTML = '<span class="chevron"></span>' + pattern;
     patternDetails.appendChild(patternSummary);
@@ -328,8 +451,6 @@ for (const [topic, patterns] of Object.entries(orderedMaster)) {
   topicDetails.appendChild(patternWrap);
   tree.appendChild(topicDetails);
 }
-count.textContent = `${questionNumber} answered questions · pattern-wise index`;
-
 sidebarToggle.addEventListener("click", () => {
   const isHidden = layout.classList.toggle("sidebar-hidden");
   sidebarToggle.setAttribute("aria-expanded", String(!isHidden));
@@ -337,7 +458,12 @@ sidebarToggle.addEventListener("click", () => {
   sidebarToggle.title = isHidden ? "Show sidebar" : "Hide sidebar";
 });
 
-const initialQuestionNumber = Number.parseInt(window.location.hash.replace("#q-", ""), 10);
+const requestedQuestionNumber = Number.parseInt(window.location.hash.replace("#q-", ""), 10);
+const initialQuestionNumber = Number.isInteger(requestedQuestionNumber)
+  && requestedQuestionNumber > 0
+  && requestedQuestionNumber <= questionNumber
+  ? requestedQuestionNumber
+  : (questionNumber > 0 ? 1 : 0);
 if (Number.isInteger(initialQuestionNumber) && initialQuestionNumber > 0 && initialQuestionNumber <= questionNumber) {
   const initialLink = document.querySelector(`a.question[href="#q-${initialQuestionNumber}"]`);
   if (initialLink) {
